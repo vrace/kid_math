@@ -85,9 +85,37 @@ void MathQuizAddSub10::generate()
 
 ////////////////////////////////////////////////////////////////////////////////
 
+class MathQuizSubHard : public MathQuiz
+{
+public:
+    MathQuizSubHard();
+    void generate() override;
+
+private:
+    std::uniform_int_distribution<> da_;
+};
+
+MathQuizSubHard::MathQuizSubHard()
+    : MathQuiz()
+    , da_(11, 99)
+{
+}
+
+void MathQuizSubHard::generate()
+{
+    int a = da_(mt_);
+    int b = mt_() % (a / 10);
+    int c = (a % 10);
+    c += mt_() % (10 - c);
+
+    std::cout << a << " - " << b * 10 + c << std::endl;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 int main()
 {
-    std::unique_ptr<MathQuiz> quiz = std::make_unique<MathQuizAddSub10>();
+    std::unique_ptr<MathQuiz> quiz = std::make_unique<MathQuizSubHard>();
     for (int i = 0; i < 12; i++) {
         quiz->generate();
     }
