@@ -50,23 +50,23 @@ void MathQuizAdd10::generate()
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class MathQuizAddSub10 : public MathQuiz
+class MathQuizAddSub : public MathQuiz
 {
 public:
-    MathQuizAddSub10();
+    MathQuizAddSub(int num_max);
     void generate() override;
 
 private:
     std::uniform_int_distribution<> d_;
 };
 
-MathQuizAddSub10::MathQuizAddSub10()
+MathQuizAddSub::MathQuizAddSub(int num_max)
     : MathQuiz()
-    , d_(0, 9)
+    , d_(0, num_max)
 {
 }
 
-void MathQuizAddSub10::generate()
+void MathQuizAddSub::generate()
 {
     int a = d_(mt_);
     int b = d_(mt_);
@@ -115,7 +115,7 @@ void MathQuizSubHard::generate()
 
 int main()
 {
-    std::unique_ptr<MathQuiz> quiz = std::make_unique<MathQuizSubHard>();
+    std::unique_ptr<MathQuiz> quiz = std::make_unique<MathQuizAddSub>(20);
     for (int i = 0; i < 12; i++) {
         quiz->generate();
     }
